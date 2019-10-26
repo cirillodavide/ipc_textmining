@@ -51,7 +51,7 @@ def annotate(abstract_dict):
 								start = int(offset)-int(start_offset)
 								end = int(offset)-int(start_offset)+int(length)
 								#print(entity,start,end,PTC_abstract[start:end])
-								if not vocab_entities[entity]:
+								if entity not in vocab_entities:
 									encoded_entity = "x"+"".join(choices(ascii_lowercase, k=10))+"x"
 									vocab_entities[entity] = encoded_entity
 								abstract_new.append(PTC_abstract[end_0:start] + vocab_entities[entity] + PTC_abstract[end])
