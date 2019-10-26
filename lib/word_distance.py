@@ -12,13 +12,16 @@ def distances(normalized_table,out_pkl):
 
     def test1():
         d = defaultdict(list)
-        for i in tqdm(lst):
-            combs = list(combinations(i, 2))
+        for i in tqdm(lst): # for each abstract
+            combs = set(list(combinations(i, 2)))
             combs_sorted = [sorted(i) for i in combs]
-            for j in combs_sorted:
-                a = i.index(j[0])
-                b = i.index(j[1])
-                d[tuple(j)].append(abs((a+1)-b))
+            for j in combs_sorted: # for each word pairs combination
+                a = [k for k,val in enumerate(i) if val==j[0]]
+                b = [k for k,val in enumerate(i) if val==j[1]]
+                for aa in a:
+                    for bb in b:
+                        v = sorted([aa,bb])
+                        d[tuple(j)].append(abs(v[0]-v[1]+1)) # append distance
         return(d)
 
     d = test1()
