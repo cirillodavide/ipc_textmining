@@ -5,6 +5,7 @@ from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer, WordNetLemmatizer
 from tqdm import tqdm
 import pandas as pd
+from itertools import compress
 
 def normalize(pmid,text):
     text = text.lower() # convert to lower case
@@ -16,6 +17,8 @@ def normalize(pmid,text):
     lemmatizer = WordNetLemmatizer() # lemmatize
 
     tokens = tokenizer.tokenize(text)
+    valid = [re.match('^[a-zA-Z]+$', i) is not None for i in tokens]
+    tokens = list(compress(tokens, valid))
     lst = []
     cnt = 0
     for i in tokens:

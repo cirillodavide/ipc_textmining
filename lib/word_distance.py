@@ -25,7 +25,7 @@ def distances(normalized_table,out_pkl):
         return(d)
 
     d = test1()
-    d = {k: (sum(v),len(v),sum(v)/len(v)) for k, v in d.items()}
+    d = {k: (len(v),sum(v)/len(v)) for k, v in d.items()} # num of abstracts w/ both entities and average distance between the two entities 
     
     f = open(out_pkl,"wb")
     pickle.dump(d,f)
