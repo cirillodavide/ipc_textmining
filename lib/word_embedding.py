@@ -6,7 +6,7 @@ from tqdm import tqdm
 import pandas as pd
 import numpy as np
 
-def vectors(normalized_table,model_file,similarities_file):
+def vectors(normalized_table,model_file,similarities_file,words_file):
 	sent = normalized_table.groupby('pmid')['token'].apply(list).tolist()
 	
 	embedding_size = 50
@@ -15,11 +15,12 @@ def vectors(normalized_table,model_file,similarities_file):
 	model.save(model_file)
 
 	vocab = dict([(k, v.index) for k, v in model.wv.vocab.items()])
-
+	
+	outv = KeyedVectors(embedding_size)
+	outv.index2word = model.wv.index2word
+	np.savetxt(words_file, outv.index2word, fmt="%s")
 	index = gensim.similarities.MatrixSimilarity(gensim.matutils.Dense2Corpus(model.wv.syn0.T))
 	np.savetxt(similarities_file, index, fmt="%s")
-	#for sims in index:
-	#	print(sims)
 
 '''
 	vocab_size = len(vocab)
