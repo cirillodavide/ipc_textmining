@@ -8,8 +8,8 @@ import pickle
 import csv
 import pandas as pd
 
-mesh = 'medulloblastoma'
-tag = 'medulloblastoma'
+mesh = sys.argv[1]
+tag = sys.argv[2]
 
 if not os.path.exists('data/'+tag):
 	os.makedirs('data/'+tag)
@@ -47,8 +47,8 @@ normalized_table.to_csv('data/'+tag+'/norm_table.tsv', sep="\t", index=False)
 #word embeddings
 print('word embedding')
 embeddings = word_embedding.vectors(normalized_table,'data/'+tag+'/word2vec.model','data/'+tag+'/word2vec_similarities.txt','data/'+tag+'/word2vec_words.txt')
-'''
+
 #word distances
 print('word distances')
 _ = word_distance.distances(normalized_table,'data/'+tag+'/word_distances.pkl')
-'''
+

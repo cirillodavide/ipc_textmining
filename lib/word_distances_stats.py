@@ -9,10 +9,12 @@ import scipy
 from scipy import stats
 import csv
 
-pickle_in = open('data/medulloblastoma/word_distances.pkl','rb')
+tag = 'ewing_sarcoma'
+
+pickle_in = open('data/'+tag+'/word_distances.pkl','rb')
 word_distances = pickle.load(pickle_in)
 
-entities = pd.read_csv('data/medulloblastoma/vocab_entities.tsv',sep='\t')
+entities = pd.read_csv('data/'+tag+'/vocab_entities.tsv',sep='\t')
 entities_dict = dict(zip(entities.encoded_entity, entities.entity))
 
 lst = []
@@ -49,7 +51,7 @@ d = df[df['comb_pvalue']<0.01]
 print(len(d))
 print(d)
 
-df.to_csv("data/medulloblastoma/edgelist.tsv",sep='\t',index=False,quoting=csv.QUOTE_NONNUMERIC)
+df.to_csv('data/'+tag+'/edgelist.tsv',sep='\t',index=False,quoting=csv.QUOTE_NONNUMERIC)
 
 #barplot of entity counts
 
@@ -77,12 +79,12 @@ fig.set_size_inches(11.7, 8.27)
 g = sns.barplot(x="entity", y="count", data=ec)
 for p in g.patches:
 	g.annotate(format(p.get_height(), '.0f'), (p.get_x() + p.get_width() / 2., p.get_height()), ha = 'center', va = 'center', xytext = (0, 10), textcoords = 'offset points')
-fig.savefig("data/medulloblastoma/entities_count.png")
+fig.savefig('data/'+tag+'/entities_count.png')
 
 #distribution plots
 
 df['log_d'] = np.log(df['d']+1)
 df['log_N'] = np.log(df['N']+1)
 sns_plot = sns.jointplot(x="log_d", y="log_N", data=df, kind="kde")
-sns_plot.savefig("data/medulloblastoma/word_distances.png")
+sns_plot.savefig('data/'+tag+'/word_distances.png')
 
