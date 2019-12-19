@@ -84,7 +84,7 @@ def gene_preprocess(lst):
 	return(d,lst)
 
 #load files
-textmined = 'data/'+tag+'/edgelist.tsv'
+textmined = 'data/'+tag+'/edgelist_word2vec.tsv'
 tm = pd.read_csv(textmined,sep='\t')
 
 tm_lst = pd.unique(tm[['word_1','word_2']].values.ravel('K'))
@@ -188,4 +188,4 @@ result = merge_dicts(ProteinMutation_dict, SNP_dict, DNAMutation_dict, Gene_dict
 tm['word_1'].replace(result, inplace=True)
 tm['word_2'].replace(result, inplace=True)
 
-tm.to_csv('data/'+tag+'/edgelist_annotated.tsv',index=False,sep='\t',quoting=csv.QUOTE_NONNUMERIC)
+tm.to_csv('data/'+tag+'/edgelist_annotated_word2vec.tsv',index=False,sep='\t',quoting=csv.QUOTE_NONNUMERIC)

@@ -5,7 +5,7 @@ from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer, WordNetLemmatizer
 from tqdm import tqdm
 import pandas as pd
-from itertools import compress
+from itertools import compress, groupby
 
 def normalize(pmid,text):
     text = text.lower() # convert to lower case
@@ -19,12 +19,13 @@ def normalize(pmid,text):
     tokens = tokenizer.tokenize(text)
     valid = [re.match('^[a-zA-Z]+$', i) is not None for i in tokens]
     tokens = list(compress(tokens, valid))
+    tokens = [x for x in tokens if x not in stopWords]
+    tokens = [x[0] for x in groupby(tokens)] # remove consecutive duplicates
     lst = []
     cnt = 0
     for i in tokens:
-        if not i in stopWords:
-            lst.append([pmid,cnt,i,ps.stem(lemmatizer.lemmatize(i))])
-            cnt += 1
+        lst.append([pmid,cnt,i,ps.stem(lemmatizer.lemmatize(i))])
+        cnt += 1
     return(lst)
 
 def table(abstract_dict):

@@ -7,9 +7,10 @@ from tqdm import tqdm
 import bisect
 import scipy
 from scipy import stats
-import csv
+import csv, sys
+from scipy.stats import spearmanr
 
-tag = 'ewing_sarcoma'
+tag = sys.argv[1]
 
 pickle_in = open('data/'+tag+'/word_distances.pkl','rb')
 word_distances = pickle.load(pickle_in)
@@ -31,6 +32,20 @@ for k,v in word_distances.items():
 df = pd.DataFrame(lst, columns=['word_1','word_2','d','N'])
 df_ref = pd.DataFrame(lst_ref, columns=['d','N'])
 
+# def remove_outlier(df_in, col_name):
+#     q1 = df_in[col_name].quantile(0.25)
+#     q3 = df_in[col_name].quantile(0.75)
+#     iqr = q3-q1 #Interquartile range
+#     fence_low  = q1-1.5*iqr
+#     fence_high = q3+1.5*iqr
+#     df_out = df_in.loc[(df_in[col_name] > fence_low) & (df_in[col_name] < fence_high)]
+#     return df_out
+
+# df = remove_outlier(df,'d')
+# df = remove_outlier(df,'N')
+# df_ref = remove_outlier(df_ref,'d')
+# df_ref = remove_outlier(df_ref,'N')
+
 #select entities
 
 d_ref = sorted(df_ref['d'])
@@ -47,9 +62,29 @@ df['d_pvalue'] = pvalue(df['d'],d_ref) # distances shorter than by chance
 df['N_pvalue'] = [1-i for i in pvalue(df['N'],N_ref)] # num of abstracts higher than by chance
 df['comb_pvalue'] = [scipy.stats.combine_pvalues(i,method='fisher')[1] for i in zip(df['d_pvalue'],df['N_pvalue'])]
 
-d = df[df['comb_pvalue']<0.01]
-print(len(d))
-print(d)
+p = 0.01
+d = df[df['comb_pvalue']<p]
+print('max d with comb_pvalue<0.01:',d['d'].max())
+print('min N with comb_pvalue<0.01:',d['N'].min())
+corrS, _ = spearmanr(df['N'], df['d'])
+print('Spearman correlation:',corrS)
+
+df["-log10_comb_pvalue"] = -np.log10(df["comb_pvalue"])
+
+fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(5, 3))
+
+sns.scatterplot(x="d", y="-log10_comb_pvalue", data=df, s=8, ax=axes[0])
+axes[0].axhline(2, ls='--', c='grey',linewidth=1)
+l = d['d'].max()
+axes[0].axvline(l, ls='--', c='grey',linewidth=1)
+
+sns.scatterplot(x="N", y="-log10_comb_pvalue", data=df, s=8, ax=axes[1])
+axes[1].axhline(2, ls='--', c='grey',linewidth=1)
+l = d['N'].min()
+axes[1].axvline(l, ls='--', c='grey',linewidth=1)
+
+fig.tight_layout()
+fig.savefig('data/'+tag+'/fishers_p-values.png')
 
 df.to_csv('data/'+tag+'/edgelist.tsv',sep='\t',index=False,quoting=csv.QUOTE_NONNUMERIC)
 

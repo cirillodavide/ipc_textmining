@@ -16,12 +16,15 @@ def distances(normalized_table,out_pkl):
             combs = set(list(combinations(i, 2)))
             combs_sorted = [sorted(i) for i in combs]
             for j in combs_sorted: # for each word pairs combination
-                a = [k for k,val in enumerate(i) if val==j[0]]
-                b = [k for k,val in enumerate(i) if val==j[1]]
-                for aa in a:
-                    for bb in b:
-                        v = sorted([aa,bb])
-                        d[tuple(j)].append(abs(v[0]-v[1]+1)) # append distance
+                if j[0] != j[1]:
+                    a = [k for k,val in enumerate(i) if val==j[0]]
+                    b = [k for k,val in enumerate(i) if val==j[1]]
+                    for aa in a:
+                        for bb in b:
+                            v = sorted([aa,bb])
+                            d[tuple(j)].append(abs(v[0]-v[1]+1)) # append distance
+                else:
+                    pass
         return(d)
 
     d = test1()
