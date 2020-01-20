@@ -5,7 +5,7 @@ from tqdm import tqdm
 def parse_xml(xml_file,out_pkl):
 	
 	dictPMID = {}
-	infile = open(xml_file,"r")
+	infile = open(xml_file,"r",encoding='utf-8')
 	contents = infile.read()
 	soup = BeautifulSoup(contents, 'lxml')
 
