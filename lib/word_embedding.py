@@ -9,7 +9,7 @@ import numpy as np
 def vectors(normalized_table,model_file):
 	sent = normalized_table.groupby('pmid')['token'].apply(list).tolist()
 	
-	embedding_size = 50
+	embedding_size = 150
 	path = get_tmpfile(model_file)
 	model = Word2Vec(sent, min_count = 1, size = embedding_size, workers = 3, window = 3, sg = 1)
 	model.save(model_file)
