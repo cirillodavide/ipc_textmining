@@ -6,14 +6,18 @@ from tqdm import tqdm
 import pandas as pd
 import numpy as np
 
-def vectors(normalized_table,model_file):
+def vectors(normalized_table,model_file,embeddings_file):
 	sent = normalized_table.groupby('pmid')['token'].apply(list).tolist()
 	
 	embedding_size = 150
 	path = get_tmpfile(model_file)
 	model = Word2Vec(sent, min_count = 1, size = embedding_size, workers = 3, window = 3, sg = 1)
 	model.save(model_file)
-
+	
+	word_vectors = model.wv
+	fname = get_tmpfile(embeddings_file)
+	word_vectors.save(fname)
+	
 	#vocab = dict([(k, v.index) for k, v in model.wv.vocab.items()])
 	
 	#outv = KeyedVectors(embedding_size)
