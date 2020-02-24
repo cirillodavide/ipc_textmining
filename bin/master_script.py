@@ -46,7 +46,7 @@ normalized_table.to_csv('data/'+tag+'/norm_table.tsv', sep="\t", index=False)
 
 #word embeddings
 print('word embedding')
-embeddings = word_embedding.vectors(normalized_table,'data/'+tag+'/word2vec.model')
+embeddings = word_embedding.vectors(normalized_table,'data/'+tag+'/word2vec.model','data/'+tag+'/embeddings.kv')
 
 #word distances
 print('word distances')
