@@ -10,7 +10,7 @@ def vectors(normalized_table,model_file,embeddings_file):
 	sent = normalized_table.groupby('pmid')['token'].apply(list).tolist()
 	
 	embedding_size = 150
-	model = Word2Vec(sent, min_count = 1, size = embedding_size, workers = 3, window = 3, sg = 1)
+	model = Word2Vec(sent, min_count = 1, vector_size = embedding_size, workers = 3, window = 3, sg = 1)
 	model.save(model_file)
 	
 	word_vectors = model.wv
