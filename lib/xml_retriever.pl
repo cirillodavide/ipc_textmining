@@ -9,7 +9,7 @@ use Time::Progress;
 my $mesh = $ARGV[0];
 my $outfile = $ARGV[1];
 my $db = 'pubmed';
-my $query = $mesh.'[mesh]';
+my $query = $mesh;
 
 #assemble the esearch URL
 my $base = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/';
