@@ -26,7 +26,7 @@ python3 bin/master_script.py "carcinoma, hepatocellular/genetics [mesh] AND hepa
 ```
 
 Job progress is displayed:
-![alt text](https://github.com/cirillodavide/ipc_textmining/blob/master/img/progress.png?raw=true)
+![alt text](https://github.com/cirillodavide/ipc_textmining/blob/master/img/progress.PNG?raw=true)
 
 Output files are stored inside the folder data and subdirectory named as the job tag:
 
