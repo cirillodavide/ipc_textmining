@@ -44,3 +44,4 @@ def parse_xml(xml_file,out_pkl):
 	f = open(out_pkl,"wb")
 	pickle.dump(dictPMID,f)
 	f.close()
+	os.remove(xml_clean_file)
