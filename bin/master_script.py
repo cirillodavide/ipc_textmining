@@ -1,6 +1,6 @@
 import sys
 sys.path.append('lib')
-import xml_processing, word_normalization, word_embedding, pubtator_annotations, word_distance
+import xml_processing, word_normalization, word_embedding, pubtator_annotations, word_distance, network_inference
 import subprocess
 import shlex
 import os
