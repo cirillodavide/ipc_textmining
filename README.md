@@ -28,7 +28,7 @@ python3 bin/master_script.py "carcinoma, hepatocellular/genetics [mesh] AND hepa
 Job progress is displayed:
 ![alt text](https://github.com/cirillodavide/ipc_textmining/blob/master/img/progress.PNG?raw=true)
 
-Output files are stored inside the folder data and subdirectory named as the job tag:
+Output files are stored inside the directory data and subdirectory named as the job tag:
 
 <kbd>abstracts.xml</kbd> XML containing the selected abstracts. \
 <kbd>abstracts.pkl</kbd> Pickled dictionary of PMIDs and abstract texts. \
@@ -38,3 +38,5 @@ Output files are stored inside the folder data and subdirectory named as the job
 <kbd>word2vec.model</kbd> GenSim model that generated the vector embeddings of the abstract tokens. \
 <kbd>embeddings.kv</kbd> GenSim file containing the vector embeddings of the abstract tokens. \
 <kbd>word_distances.pkl</kbd> Pickled dictonary reporting the num of abstracts with each pair of tokens and average number of other tokens between them in the abstracts.
+<kbd>edgelist_distances.tsv</kbd> Table reporting global text features (d: average number of separating words; N: number of co-occurring abstracts), corresponding empirical p-values and their combination (Fisher's method).
+<kbd>edgelist_word2vec.tsv</kbd> Table reporting local text features (cosine_sim: cosine similarity between word embeddings).
