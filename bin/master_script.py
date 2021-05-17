@@ -59,12 +59,3 @@ _ = network_inference.edgelists('data/'+tag+'/vocab_entities.tsv',
 				'data/'+tag+'/word2vec.model',
 				'data/'+tag+'/edgelist_distances.tsv',
 				'data/'+tag+'/edgelist_word2vec.tsv')
-
-#create the network
-#python lib/word_distances_stats.py tag
-#python lib/annotate_edgelist.py tag
-#python lib/similarities_from_net.py tag
-#python lib/annotate_edgelist_word2vec.py tag
-
-
-
