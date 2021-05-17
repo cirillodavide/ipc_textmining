@@ -14,7 +14,7 @@ def pvalue(x,ref):
 		    p.append(n/(len(ref)+1)) # pseudocount to avoid p-value of zero
 	    return(p)
 
-def edgelist(vocab_entities, word_distances, model, outfile1, outfile2):
+def edgelists(vocab_entities, word_distances, model, outfile1, outfile2):
 
     entities = pd.read_csv(vocab_entities,sep='\t')
     entities_dict = dict(zip(entities.encoded_entity, entities.entity))
@@ -51,7 +51,7 @@ def edgelist(vocab_entities, word_distances, model, outfile1, outfile2):
 
     #word embeddings edglist
 
-    vocab = pd.read_csv('data/'+tag+'/vocab_entities.tsv',sep='\t',header=None)
+    vocab = pd.read_csv(vocab_entities,sep='\t',header=None)
     vocab.columns = ['word','token']
 
     di = dict(zip(vocab.word,vocab.token))
