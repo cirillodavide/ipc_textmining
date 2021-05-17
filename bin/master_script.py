@@ -52,6 +52,14 @@ embeddings = word_embedding.vectors(normalized_table,'data/'+tag+'/word2vec.mode
 print('word distances')
 _ = word_distance.distances(normalized_table,'data/'+tag+'/word_distances.pkl')
 
+#network inference
+print('network inference')
+_ = network_inference.edgelists('data/'+tag+'/vocab_entities.tsv',
+				'data/'+tag+'/word_distances.pkl',
+				'data/'+tag+'/word2vec.model',
+				'data/'+tag+'/edgelist_distances.tsv',
+				'data/'+tag+'/edgelist_word2vec.tsv')
+
 #create the network
 #python lib/word_distances_stats.py tag
 #python lib/annotate_edgelist.py tag
