@@ -45,7 +45,6 @@ def edgelists(vocab_entities, word_distances, model, outfile1, outfile2):
     df['d_pvalue'] = pvalue(df['d'],d_ref) # distances shorter than by chance
     df['N_pvalue'] = [1-i for i in pvalue(df['N'],N_ref)] # num of abstracts higher than by chance
     df['comb_pvalue'] = [scipy.stats.combine_pvalues(i,method='fisher')[1] for i in zip(df['d_pvalue'],df['N_pvalue'])]
-    df["-log10_comb_pvalue"] = -np.log10(df["comb_pvalue"])
 
     df.to_csv(outfile1,index=None,sep='\t')
 
