@@ -25,9 +25,10 @@ def edgelists(vocab_entities, word_distances, model, outfile1, outfile2):
     model = Word2Vec.load(model)
 
     #word distances edglist
+    print('word distances edglist')    
     lst = []
     lst_ref = []
-    for k,v in word_distances.items():
+    for k,v in tqdm(word_distances.items()):
 	    if len(k[0])==12 and len(k[1])==12 and k[0].startswith('x') and k[1].startswith('x') and k[0].endswith('x') and k[1].endswith('x'):
 		    try:
 			    lst.append([entities_dict[k[0]],entities_dict[k[1]],v[1],v[0]])
@@ -49,7 +50,7 @@ def edgelists(vocab_entities, word_distances, model, outfile1, outfile2):
     df.to_csv(outfile1,index=None,sep='\t')
 
     #word embeddings edglist
-
+    print('word embeddings edglist')
     vocab = pd.read_csv(vocab_entities,sep='\t',header=None)
     vocab.columns = ['word','token']
 
@@ -58,7 +59,7 @@ def edgelists(vocab_entities, word_distances, model, outfile1, outfile2):
     df = df.replace({'word_1': di})
     df = df.replace({'word_2': di})
     lst = []
-    for i in set(df['word_1']):
+    for i in tqdm(set(df['word_1'])):
 	    for j in set(df['word_2']):
 		    if i != j:
 			    lst.append([di_rev[i],di_rev[j],model.wv.similarity(i,j)])
