@@ -24,7 +24,7 @@ RUN apt-get install --yes \
 	python3 \
 	python3-pip
 
-RUN pip3 install bs4 tqdm nltk pandas gensim lxml
+RUN pip3 install bs4 tqdm nltk pandas gensim lxml --break-system-packages
 RUN python3 -m nltk.downloader stopwords
 RUN python3 -m nltk.downloader wordnet
 
