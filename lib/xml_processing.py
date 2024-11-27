@@ -23,7 +23,9 @@ def clean_xml(in_xml,out_xml):
 def parse_xml(xml_file,out_pkl):
 	
 	dictPMID = {}
-	xml_clean_file = "{0}_{2}{1}".format((*os.path.splitext(xml_file) + ('clean',)))
+	base, ext = os.path.splitext(xml_file)
+	xml_clean_file = f"{base}_clean{ext}"
+	#xml_clean_file = "{0}_{2}{1}".format((*os.path.splitext(xml_file) + ('clean',)))
 	clean_xml(xml_file,xml_clean_file)
 	infile = open(xml_clean_file,"r",encoding='utf-8')
 	contents = infile.read()
